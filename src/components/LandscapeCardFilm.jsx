@@ -7,18 +7,25 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { PopupContext } from "../SharedContext";
-import { PopupDetailSeries } from "./PopupDetailSeries";
+import { useNavigate } from "react-router-dom";
 
-export const LandscapeCardFilm = ({ src, rate, info, genre, duration }) => {
+export const LandscapeCardFilm = ({ movie }) => {
   const { setDetailClickingFilm } = useContext(PopupContext);
+  const navigate = useNavigate()
 
   const handleClickDetail = () => {
     setDetailClickingFilm(true);
     const theMovie = {
-      src: src,
-      rate: rate,
-      genre: genre,
-      duration: duration,
+      release: movie.release,
+      title: movie.title,
+      src: `/imglandscape/${movie.imageUrl}`,
+      genre: movie.genre,
+      duration: movie.duration,
+      description: movie.description,
+      rating: movie.age_rating,
+      filmMaker: movie.filmmaker,
+      cast: movie.cast,
+      age_rating: movie.age_rating,
     };
     localStorage.setItem("movie", JSON.stringify(theMovie));
   };
@@ -27,21 +34,27 @@ export const LandscapeCardFilm = ({ src, rate, info, genre, duration }) => {
     if (window.innerWidth < 768) {
       setDetailClickingFilm(true);
       const theMovie = {
-        src: src,
-        rate: rate,
-        genre: genre,
-        duration: duration,
+        release: movie.release,
+        title: movie.title,
+        src: `/imglandscape/${movie.imageUrl}`,
+        genre: movie.genre,
+        duration: movie.duration,
+        description: movie.description,
+        rating: movie.age_rating,
+        filmMaker: movie.filmmaker,
+        cast: movie.cast,
+        age_rating: movie.age_rating,
       };
       localStorage.setItem("movie", JSON.stringify(theMovie));
     }
   };
 
   const handleWatchSeries = () => {
-    window.location.pathname = "watchfilm"
-  }
+    navigate("/watchfilm");
+  };
 
   return (
-    <div
+    <section
       onClick={handleMobileClick}
       className="flex-shrink-0 w-[300px] h-[160px] md:w-47/200 md:h-[170px] relative group"
     >
@@ -49,7 +62,7 @@ export const LandscapeCardFilm = ({ src, rate, info, genre, duration }) => {
         <div className="object-cover h-40 md:w-full rounded-lg">
           <img
             className="object-cover w-full h-full transition-all duration-300 group-hover:scale-105"
-            src={src}
+            src={`/imglandscape/${movie?.imageUrl}`}
             alt=""
             loading="lazy"
           />
@@ -57,10 +70,10 @@ export const LandscapeCardFilm = ({ src, rate, info, genre, duration }) => {
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/30 to-transparent">
           <div className="flex absolute bottom-0 justify-between w-full p-3 group-hover:opacity-0 transition-opacity duration-300">
-            <h1 className="font-[700] text-md">A Man Called Otto</h1>
+            <h1 className="font-[700] text-md">{movie?.title}</h1>
             <span className="pt-1 text-md font-[700]">
               <FontAwesomeIcon icon={faStar} className="text-white" />
-              {rate}
+              {movie?.rating} / 5
             </span>
           </div>
         </div>
@@ -93,21 +106,22 @@ export const LandscapeCardFilm = ({ src, rate, info, genre, duration }) => {
             {/* Hover Event */}
             <div className="flex gap-2 text-gray-300 mb-1">
               <span className="text-md rounded-full px-2 py-[2px] border-gray-300 bg-[#CDF1FF4D]">
-                13+
+                {movie?.age_rating}
               </span>
-              <span className="items-center flex">{duration || "2j 33m"}</span>
+              <span className="items-center flex">{movie?.duration}m</span>
             </div>
 
-            <div className="text-white text-sm font-semibold line-clamp-1">
-              {genre}
+            <div className="text-white text-sm font-semibold line-clamp-1 text-ellipsis overflow-hidden">
+              {movie?.genre[0]} • {movie?.genre[1]} {movie?.genre[2] ? "•" : ""}{" "}
+              {movie?.genre[2]}
             </div>
           </div>
         </div>
       </div>
 
       <div className="absolute top-2 left-2 right-2 text-white text-sm font-medium group-hover:opacity-0 transition-opacity duration-300">
-        {info}
+        {/* {info} */}
       </div>
-    </div>
+    </section>
   );
 };

@@ -5,9 +5,9 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { PaymentCodeGenerator } from "./PaymentCodeGenerator";
 import { PopupContext } from "../SharedContext";
+import { useNavigate } from "react-router-dom";
 
 export const ShowPayment = () => {
-  // const {isSubscribe, setIsSubscribe} = useContext(PopupContext)
   const [menit, setMenit] = useState(15);
   const [detik, setDetik] = useState(0);
   const [infoPayments, setInfoPayments] = useState(() => {
@@ -15,8 +15,9 @@ export const ShowPayment = () => {
     return saved ? JSON.parse(saved) : null;
   });
   const [paymentCode, setPaymentCode] = useState("");
-  const {versiPembayaran, setVersiPembayaran} = useContext(PopupContext)
- 
+  const { versiPembayaran, setVersiPembayaran } = useContext(PopupContext);
+  const navigate = useNavigate();
+
   useEffect(() => {
     setPaymentCode(PaymentCodeGenerator());
   }, []);
@@ -24,8 +25,7 @@ export const ShowPayment = () => {
   let price = 0;
   moment.locale("id");
   let dateNow = moment().format("D MMMM YYYY");
-  const date30DaysLater = moment().add(30, 'days').format("D MMMM YYYY");
-  
+  const date30DaysLater = moment().add(30, "days").format("D MMMM YYYY");
 
   if (infoPayments.versi === "Individual") price = 49;
   if (infoPayments.versi === "Berdua") price = 79;
@@ -39,9 +39,9 @@ export const ShowPayment = () => {
       }
       setDetik((detik) => detik - 1);
       if (menit === 0 && detik === 0) {
-        window.location.pathname = "/langganan";
-        setInfoPayments("")
-        setVersiPembayaran("")
+        navigate("/langganan");
+        setInfoPayments("");
+        setVersiPembayaran("");
       }
     }, 1000);
   });
@@ -51,9 +51,9 @@ export const ShowPayment = () => {
   };
 
   const handlePayment = () => {
-    localStorage.setItem("isSubscribe", JSON.stringify(true))
-    localStorage.setItem("expiryDate", JSON.stringify(date30DaysLater))
-    window.location.pathname = "series"
+    localStorage.setItem("isSubscribe", JSON.stringify(true));
+    localStorage.setItem("expiryDate", JSON.stringify(date30DaysLater));
+    navigate("/series");
   };
 
   return (

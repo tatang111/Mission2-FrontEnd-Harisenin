@@ -1,7 +1,3 @@
-import { faFileImport, faPencil } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { TopTen } from "./TopTen";
-import { PotraitCard } from "./PotraitCard";
 import { Footer } from "./Footer";
 import { LeftMainProfil } from "./LeftMainProfil";
 import { DaftarSayaMainProfil } from "./DaftarSayaMainProfil";

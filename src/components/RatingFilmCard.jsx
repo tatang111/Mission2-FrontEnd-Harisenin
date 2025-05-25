@@ -1,11 +1,23 @@
-import { useRef } from "react";
 import { ArrowScrollX } from "./ArrowScrollX";
-import { NewEpisode } from "./NewEpisode";
 import { PotraitCard } from "./PotraitCard";
-import { TopTen } from "./TopTen";
+import { useContext, useEffect, useRef, useState } from "react";
+import { PopupContext } from "../SharedContext";
 
 export const RatingFilmCard = () => {
-  const scrollContainerRef = useRef(null)
+  const { allMovies } = useContext(PopupContext);
+  const [movies, setMovies] = useState([]);
+  const scrollContainerRef = useRef(null);
+
+  useEffect(() => {
+    try {
+      const getMovie = allMovies.filter(
+        (movie) => movie?.category1 === "top-rating" && (movie.id < 33 || movie.id > 65)
+      ); 
+      setMovies(getMovie);
+    } catch (error) {
+      console.log(error)
+    }
+  }, [allMovies]);
 
   return (
     <div className="top-film flex flex-col gap-4 md:gap-8 relative">
@@ -13,19 +25,14 @@ export const RatingFilmCard = () => {
         Top Rating Film dan Series Hari Ini
       </h1>
       <div className="relative">
-          <ArrowScrollX containerRef={scrollContainerRef} />
-        <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-          <PotraitCard src="/imgpotrait/Number=1.png" info={<NewEpisode />} />
-          <PotraitCard src="/imgpotrait/Number=10.png" />
-          <PotraitCard src="/imgpotrait/Number=11.png" />
-          <PotraitCard src="/imgpotrait/Number=12.png" info={<NewEpisode />} />
-          <PotraitCard src="/imgpotrait/Number=14.png" info={<TopTen />} />
-          <PotraitCard src="/imgpotrait/Number=15.png" info={<TopTen />} />
-          <PotraitCard src="/imgpotrait/Number=16.png" info={<TopTen />} />
-          <PotraitCard src="/imgpotrait/Number=17.png" info={<TopTen />} />
-          <PotraitCard src="/imgpotrait/Number=18.png" info={<TopTen />} />
-          <PotraitCard src="/imgpotrait/Number=19.png" info={<TopTen />} />
-          <PotraitCard src="/imgpotrait/Number=20.png" info={<TopTen />} />
+        <ArrowScrollX containerRef={scrollContainerRef} />
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide"
+        >
+          {movies.map((movie) => (
+            <PotraitCard key={movie.id} movie={movie} />
+          ))}
         </div>
       </div>
     </div>

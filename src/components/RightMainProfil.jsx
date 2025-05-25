@@ -11,12 +11,10 @@ export const RightMainProfil = () => {
     return saved ? JSON.parse(saved) : null;
   })
 
-
-
   return (
     <>
       {isSubscribe ? (
-        <div className="berlangganan bg-gradient-to-r from-[#5370D4] to-[#192DB7] text-white p-6 w-full md:w-[470px] h-[195px] md:h-[193px] gap-4 rounded-2xl relative top-13 right-0 flex flex-col">
+        <div className="berlangganan bg-gradient-to-r from-[#5370D4] to-[#192DB7] text-white p-6 w-full md:w-[470px] md:h-[193px] gap-4 rounded-2xl relative top-8 right-0 flex flex-col">
           <button className="px-6 py-1 text-[#0F1E93] font-[600] bg-[#C1C2C4] rounded-full w-20">Aktif</button>
           <div className="grid gap-1">
             <p className="text-2xl font-[600]">Akun Premium Individual✨</p>

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { NewEpisode } from "../components/NewEpisode";
@@ -8,8 +8,20 @@ import { PopupContext } from "../SharedContext";
 import { PopupDetailFilm } from "../components/PopupDetailFilm";
 
 export const DaftarSaya = () => {
-  const { detailClickingFilm, setDetailClickingFilm } =
+  const { detailClickingFilm, setDetailClickingFilm, allMovies} =
     useContext(PopupContext);
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    try {
+      const getMovie = allMovies
+        .filter((movie) => movie.id > 10 && movie.id < 25)
+        .map((movie) => ({ ...movie, premium: false }));
+      setMovies(getMovie);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [allMovies]);
 
   return (
     <div>
@@ -19,21 +31,14 @@ export const DaftarSaya = () => {
         } `}
       >
         <Navbar />
-        <div className="md:px-20 ml-4 my-[20px] md:my-[70px] flex flex-col gap-8">
+        <main className="md:px-20 ml-4 my-[20px] md:my-[50px] flex flex-col gap-8">
           <h1 className="text-3xl font-[600]">Daftar Saya</h1>
-          <div className="grid grid-cols-3 md:grid-cols-5 gap-x-1 gap-y-5 md:gap-5">
-            {movies.map((movie, index) => (
-              <PotraitCard
-                key={index}
-                src={movie.src}
-                duration={movie.duration}
-                genre={movie.genre}
-                info={movie.info}
-                info2={movie.info2}
-              />
+          <div className="grid grid-cols-3 md:grid-cols-5 -ml-2 pr-2 gap-x-1 gap-y-5 md:gap-5">
+            {movies.map((movie) => (
+              <PotraitCard key={movie.id} movie={movie} />
             ))}
           </div>
-        </div>
+        </main>
         <Footer />
       </div>
       {detailClickingFilm && (
@@ -44,90 +49,3 @@ export const DaftarSaya = () => {
     </div>
   );
 };
-
-const movies = [
-  {
-    src: "/imgpotrait/Number=1.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: <TopTen />,
-    info2: <NewEpisode />,
-  },
-  {
-    src: "/imgpotrait/Number=2.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: "",
-    info2: "",
-  },
-  {
-    src: "/imgpotrait/Number=3.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: "",
-    info2: <NewEpisode />,
-  },
-  {
-    src: "/imgpotrait/Number=4.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: "",
-    info2: <NewEpisode />,
-  },
-  {
-    src: "/imgpotrait/Number=5.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: <TopTen />,
-    info2: <NewEpisode />,
-  },
-  {
-    src: "/imgpotrait/Number=6.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: <TopTen />,
-    info2: <NewEpisode />,
-  },
-  {
-    src: "/imgpotrait/Number=7.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: <TopTen />,
-    info2: "",
-  },
-  {
-    src: "/imgpotrait/Number=8.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: <TopTen />,
-    info2: "",
-  },
-  {
-    src: "/imgpotrait/Number=9.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: "",
-    info2: "",
-  },
-  {
-    src: "/imgpotrait/Number=10.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: "",
-    info2: "",
-  },
-  {
-    src: "/imgpotrait/Number=11.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: "",
-    info2: "",
-  },
-  {
-    src: "/imgpotrait/Number=12.png",
-    duration: "2h 1m",
-    genre: "Comedy • Action • Comedy",
-    info: "",
-    info2: "",
-  },
-];

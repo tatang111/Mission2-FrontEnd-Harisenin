@@ -26,7 +26,6 @@ export const Masuk = () => {
       setError("Username Atau Password Salah!");
       return;
     }
-
     navigate("/beranda");
   };
 
@@ -88,7 +87,7 @@ export const Masuk = () => {
           <h1>
             Belum punya akun?{" "}
             <Link
-              to="/daftar"
+              to="/"
               className="font-bold cursor-pointer hover:underline"
             >
               Daftar
@@ -103,7 +102,7 @@ export const Masuk = () => {
           <button
             type="submit"
             onClick={(e) => handleMasukClick(e)}
-            className="p-[6px] border-white w-full rounded-full cursor-pointer hover:underline bg-[gray]"
+            className="p-[6px] border-white w-full rounded-full cursor-pointer hover:underline bg-gray-500"
           >
             Masuk
           </button>
